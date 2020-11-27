@@ -1,7 +1,7 @@
 <idea-plugin>
-    <id>com.github.ralphpina.intellijopenapilinter</id>
-    <name>intellij-openapi-linter</name>
-    <vendor>ralphpina</vendor>
+    <id>net.ralphpina.intellij.openapilinter</id>
+    <name>OpenAPI Linter</name>
+    <vendor email="ralph.pina@gmail.com">Ralph Pina</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
