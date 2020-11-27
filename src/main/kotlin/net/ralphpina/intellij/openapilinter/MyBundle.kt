@@ -1,4 +1,4 @@
-package com.github.ralphpina.intellijopenapilinter
+package net.ralphpina.intellij.openapilinter
 
 import com.intellij.AbstractBundle
 import org.jetbrains.annotations.NonNls

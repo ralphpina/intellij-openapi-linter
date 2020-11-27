@@ -1,7 +1,7 @@
-package com.github.ralphpina.intellijopenapilinter.services
+package net.ralphpina.intellij.openapilinter.services
 
 import com.intellij.openapi.project.Project
-import com.github.ralphpina.intellijopenapilinter.MyBundle
+import net.ralphpina.intellij.openapilinter.MyBundle
 
 class MyProjectService(project: Project) {
 
