@@ -26,14 +26,14 @@ data class SpectralLintIssue(
  * Inspired by https://github.com/KronicDeth/intellij-elixir
  */
 fun lint(psiFile: PsiFile): List<SpectralLintIssue> {
-    logger.debug(">>>> Starting linter >>>>")
+    logger.log(">>>> Starting linter >>>>")
     try {
         val processOutput = execAndGetOutput(generalCommandLine(psiFile))
         return processOutput.parseSpectralResult()
     } catch (exception: Exception) {
-        logger.debug("Error linting.")
+        logger.log("Error linting.")
     }
-    logger.debug("<<<< Ending linter with empty list <<<<")
+    logger.log("<<<< Ending linter with empty list <<<<")
     return emptyList()
 }
 
