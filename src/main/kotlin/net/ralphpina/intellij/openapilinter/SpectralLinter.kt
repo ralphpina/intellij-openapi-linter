@@ -61,7 +61,7 @@ private fun parseWarning(output: String): SpectralLintIssue? {
     val (line, column, severity, _, message) = result.destructured
     val severityType = if (severity == "warning") Severity.WARNING else Severity.ERROR
     return SpectralLintIssue(
-            line = line.toInt(),
+            line = line.toInt() - 1,
             column = column.toInt(),
             severity = severityType,
             message = message
