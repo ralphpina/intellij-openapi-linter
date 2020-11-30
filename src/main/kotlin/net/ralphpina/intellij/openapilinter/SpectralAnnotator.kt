@@ -39,26 +39,24 @@ private fun annotateIssueInFile(holder: AnnotationHolder, psiFile: PsiFile, issu
     val startElement = findFirstElementAtLine(psiFile, issue.line)
     if (startElement == null) {
         // There is no AST element on this line. Maybe a tabulation issue on a blank line?
-        createAnnotation(
-                holder,
+        holder.createAnnotation(
                 getLineRange(psiFile, issue.line),
                 issue
         )
     } else if (startElement.isValid) {
-        createAnnotation(
-                holder,
-                getLineRange(startElement),
+        holder.createAnnotation(
+                getLineRange(if (startElement.text.trim().isEmpty()) startElement.firstChild ?: startElement else startElement),
                 issue
         )
+    } else {
+        logger.log("No annotating added for $issue")
     }
 }
 
-private fun createAnnotation(
-        holder: AnnotationHolder,
+private fun AnnotationHolder.createAnnotation(
         textRange: TextRange,
         issue: SpectralLintIssue
-) = holder
-        .newAnnotation(issue.toHighlightSeverity(), issue.message)
+) = newAnnotation(issue.toHighlightSeverity(), issue.message)
         .range(textRange)
         .tooltip(formatMessageToHtmlWithLink(issue.message))
         .create()
