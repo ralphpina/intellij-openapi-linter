@@ -1,12 +1,6 @@
 package net.ralphpina.intellij.openapilinter
 
-import com.google.common.collect.Sets
-import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.editor.Document
-import com.intellij.openapi.editor.Editor
-import com.intellij.openapi.editor.EditorFactory
-import com.intellij.openapi.editor.markup.RangeHighlighter
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElement
@@ -17,8 +11,7 @@ import com.intellij.psi.PsiFile
  * I converted it to Kotlin using Intellij.
  * Then I manually fixed things like the use of Optional<>.
  */
-fun findFirstElementAtLine(file: PsiFile, line: Int): PsiElement? {
-    val ijLine = line - 1
+fun findFirstElementAtLine(file: PsiFile, ijLine: Int): PsiElement? {
     val document = PsiDocumentManager.getInstance(file.project).getDocument(file)
     var element = getFirstSiblingFrom(file, ijLine, document)
     while (element != null && element.textLength == 0) {
@@ -44,46 +37,6 @@ private fun getFirstSiblingFrom(file: PsiFile, ijLine: Int, document: Document?)
         // element keeps to be absent
     }
     return element
-}
-
-fun findDocumentFromPsiFile(psiFile: PsiFile) =
-        PsiDocumentManager.getInstance(psiFile.project).getDocument(psiFile)
-
-fun findEditorsFrom(document: Document) =
-        EditorFactory.getInstance().getEditors(document).toList()
-
-fun findRangeHighlighterAtLine(editor: Editor, line: Int?): RangeHighlighter? {
-    if (line == null) return null
-    val markupModel = editor.markupModel
-    val highlighters = markupModel.allHighlighters
-    for (highlighter in highlighters) {
-        val logicalPosition = editor.offsetToLogicalPosition(highlighter.startOffset)
-        val lineOfHighlighter = logicalPosition.line
-        if (lineOfHighlighter == line - 1) {
-            return highlighter
-        }
-    }
-    return null
-}
-
-fun findAllRangeHighlightersFrom(document: Document): Set<RangeHighlighter> {
-    val highlighters: MutableSet<RangeHighlighter> = Sets.newHashSet()
-    for (editor in findEditorsFrom(document)) {
-        addHighlightersFromEditor(highlighters, editor)
-    }
-    return highlighters
-}
-
-private fun addHighlightersFromEditor(highlighters: MutableSet<RangeHighlighter>, editor: Editor) {
-    ApplicationManager.getApplication().invokeAndWait({
-        val highlightersFromCurrentEditor = editor.markupModel.allHighlighters
-        highlighters.addAll(Sets.newHashSet(*highlightersFromCurrentEditor))
-    }, ModalityState.any())
-}
-
-fun findLineOfRangeHighlighter(highlighter: RangeHighlighter, editor: Editor): Int {
-    val logicalPosition = editor.offsetToLogicalPosition(highlighter.startOffset)
-    return logicalPosition.line
 }
 
 fun getLineRange(psiFile: PsiFile, line: Int?): TextRange {
