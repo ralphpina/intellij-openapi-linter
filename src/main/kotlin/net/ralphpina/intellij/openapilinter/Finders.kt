@@ -39,19 +39,17 @@ private fun getFirstSiblingFrom(file: PsiFile, ijLine: Int, document: Document?)
     return element
 }
 
-fun getLineRange(psiFile: PsiFile, line: Int?): TextRange {
-    if (line == null) return TextRange.EMPTY_RANGE
+fun getLineRange(psiFile: PsiFile, ijLine: Int): TextRange {
     val project = psiFile.project
     val documentManager = PsiDocumentManager.getInstance(project)
     val document = documentManager.getDocument(psiFile.containingFile) ?: return TextRange.EMPTY_RANGE
-    val ijLine = if (line > 0) line - 1 else 0
     return getTextRangeForLine(document, ijLine)
 }
 
-private fun getTextRangeForLine(document: Document, line: Int): TextRange {
+private fun getTextRangeForLine(document: Document, ijLine: Int): TextRange {
     return try {
-        val lineStartOffset = document.getLineStartOffset(line)
-        val lineEndOffset = document.getLineEndOffset(line)
+        val lineStartOffset = document.getLineStartOffset(ijLine)
+        val lineEndOffset = document.getLineEndOffset(ijLine)
         TextRange(lineStartOffset, lineEndOffset)
     } catch (ignore: IndexOutOfBoundsException) { //NOSONAR
         // Local file should be different than remote
@@ -65,6 +63,10 @@ fun getLineRange(psiElement: PsiElement): TextRange {
     val document = documentManager.getDocument(psiElement.containingFile.containingFile)
             ?: return TextRange.EMPTY_RANGE
     val line = document.getLineNumber(psiElement.textOffset)
+    val lineStartOffset =
+            if (psiElement.text.isNotBlank())
+                psiElement.textOffset
+            else psiElement.textRange.endOffset
     val lineEndOffset = document.getLineEndOffset(line)
-    return TextRange(psiElement.textOffset, lineEndOffset)
+    return TextRange(lineStartOffset, lineEndOffset)
 }
