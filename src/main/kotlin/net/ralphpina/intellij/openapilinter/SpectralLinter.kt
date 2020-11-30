@@ -31,7 +31,9 @@ fun lint(psiFile: PsiFile): List<SpectralLintIssue> {
         val processOutput = execAndGetOutput(generalCommandLine(psiFile))
         return processOutput.parseSpectralResult()
     } catch (exception: Exception) {
-        logger.log("Error linting.")
+        logger.log("!!!! Error linting: $exception !!!!")
+    } finally {
+        logger.log("<<<< Ending linter <<<<")
     }
     logger.log("<<<< Ending linter with empty list <<<<")
     return emptyList()
@@ -50,14 +52,14 @@ private fun generalCommandLine(psiFile: PsiFile): GeneralCommandLine {
 }
 
 private fun ProcessOutput.parseSpectralResult() =
-        stdoutLines.mapNotNull { parseWarning(it) }
+        stdoutLines.mapNotNull { it.toSpectralLintIssue() }
 
 private val REGEX = """(?<line>\d+):(?<column>\d+)\s+(?<severity>warning|error)\s+(?<code>[a-zA-Z0-9-]*)\s+(?<message>.+)""".toRegex()
 
-private fun parseWarning(output: String): SpectralLintIssue? {
+private fun String.toSpectralLintIssue(): SpectralLintIssue? {
     // might be valid e.g. 1:1   warning  openapi-tags           OpenAPI object should have non-empty `tags` array.
     // or junk such as OpenAPI 3.x detected
-    val result = REGEX.matchEntire(output.trim()) ?: return null
+    val result = REGEX.matchEntire(trim()) ?: return null
     val (line, column, severity, _, message) = result.destructured
     val severityType = if (severity == "warning") Severity.WARNING else Severity.ERROR
     return SpectralLintIssue(
