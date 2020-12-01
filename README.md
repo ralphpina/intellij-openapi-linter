@@ -13,7 +13,9 @@ To keep everything working, do not remove `<!-- ... -->` sections.
 <!-- Plugin description end -->
 
 ## Planned Improvements
-
+- [ ] Clean up classes from template
+- [ ] Better organization for code
+- [ ] Document why PsiElement.orFirstChild() is needed
 - [ ] Add configuration panel to add executable and spectral config
 - [ ] Automatically search project for `.spectral.yaml` config
 - [ ] Add custom regex to parse issue messages
@@ -21,6 +23,7 @@ To keep everything working, do not remove `<!-- ... -->` sections.
 - [ ] Can I know when plugin is running in debug?
 - [ ] Add `ErrorReportSubmitter` implementation [example](https://github.com/uwolfer/gerrit-intellij-plugin/blob/intellij14/src/main/java/com/urswolfer/intellij/plugin/gerrit/errorreport/PluginErrorReportSubmitter.java)
 - [ ] Add apply a fix to issues if possible
+- [ ] Add support for [quick fixes](https://jetbrains.org/intellij/sdk/docs/tutorials/code_inspections.html#quick-fix-implementation)
 - [ ] Publish blog post 
 
 ## Installation
