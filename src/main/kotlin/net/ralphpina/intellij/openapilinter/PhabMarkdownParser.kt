@@ -9,7 +9,8 @@ private val logger = Logger.getInstance("PhabMarkdownParser")
 // https://secure.phabricator.com/book/phabricator/article/remarkup/#linking-uris
 // It looks like so: [[http://www.boring-legal-documents.com/ | legal documents]]
 // We want to parse these urls and convert them to HTML links for tooltips
-private val REGEX = """(?<message>.+)\sSee \[\[ (?<url>.+) \| (?<linkText>.+)\s(?<extra>.+)""".toRegex()
+private val REGEX =
+    """(?<message>.+)\sSee \[\[ (?<url>.+) \| (?<linkText>.+)\s(?<extra>.+)""".toRegex()
 
 /**
  * TODO: Figure out this abstraction.

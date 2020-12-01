@@ -60,11 +60,11 @@ fun getLineRange(psiElement: PsiElement): TextRange {
     val project = psiElement.project
     val documentManager = PsiDocumentManager.getInstance(project)
     val document = documentManager.getDocument(psiElement.containingFile.containingFile)
-            ?: return TextRange.EMPTY_RANGE
+        ?: return TextRange.EMPTY_RANGE
     val line = document.getLineNumber(psiElement.textOffset)
     val lineStartOffset =
-            if (psiElement.text.isNotBlank()) psiElement.textOffset
-            else psiElement.textRange.endOffset
+        if (psiElement.text.isNotBlank()) psiElement.textOffset
+        else psiElement.textRange.endOffset
     val lineEndOffset = document.getLineEndOffset(line)
     return TextRange(lineStartOffset, lineEndOffset)
 }

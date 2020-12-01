@@ -41,13 +41,13 @@ private fun annotateIssueInFile(holder: AnnotationHolder, psiFile: PsiFile, issu
     if (startElement == null) {
         // There is no AST element on this line. Maybe a tabulation issue on a blank line?
         holder.createAnnotation(
-                getLineRange(psiFile, issue.line),
-                issue
+            getLineRange(psiFile, issue.line),
+            issue
         )
     } else if (startElement.isValid) {
         holder.createAnnotation(
-                getLineRange(startElement.orFirstChild()),
-                issue
+            getLineRange(startElement.orFirstChild()),
+            issue
         )
     } else {
         logger.log("No annotating added for $issue")
@@ -55,21 +55,21 @@ private fun annotateIssueInFile(holder: AnnotationHolder, psiFile: PsiFile, issu
 }
 
 private fun AnnotationHolder.createAnnotation(
-        textRange: TextRange,
-        issue: SpectralLintIssue
+    textRange: TextRange,
+    issue: SpectralLintIssue
 ) = newAnnotation(issue.toHighlightSeverity(), issue.message)
-        .range(textRange)
-        .tooltip(issue.message.toHtml())
-        .create()
+    .range(textRange)
+    .tooltip(issue.message.toHtml())
+    .create()
 
 private fun SpectralLintIssue.toHighlightSeverity() =
-        when (severity) {
-            Severity.WARNING -> HighlightSeverity.WARNING
-            Severity.ERROR -> HighlightSeverity.ERROR
-        }
+    when (severity) {
+        Severity.WARNING -> HighlightSeverity.WARNING
+        Severity.ERROR -> HighlightSeverity.ERROR
+    }
 
 /**
  * TODO: document why this is needed
  */
 private fun PsiElement.orFirstChild() =
-        if (text.trim().isEmpty()) firstChild ?: this else this
+    if (text.trim().isEmpty()) firstChild ?: this else this

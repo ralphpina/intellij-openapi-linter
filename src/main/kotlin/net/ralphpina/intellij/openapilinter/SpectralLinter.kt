@@ -17,10 +17,10 @@ enum class Severity {
 }
 
 data class SpectralLintIssue(
-        val line: Int,
-        val column: Int,
-        val severity: Severity,
-        val message: String
+    val line: Int,
+    val column: Int,
+    val severity: Severity,
+    val message: String
 )
 
 /**
@@ -53,13 +53,11 @@ private fun generalCommandLine(psiFile: PsiFile): GeneralCommandLine {
 }
 
 private fun ProcessOutput.parseSpectralResult() =
-        stdoutLines.mapNotNull { it.toSpectralLintIssue() }
+    stdoutLines.mapNotNull { it.toSpectralLintIssue() }
 
-private val REGEX = """
-    (?<line>\d+):(?<column>\d+)\s+
-    (?<severity>warning|error)\s+
-    (?<code>[a-zA-Z0-9-]*)\s+
-    (?<message>.+)""".trimIndent().toRegex()
+@Suppress("MaxLineLength")
+private val REGEX =
+    """(?<line>\d+):(?<column>\d+)\s+(?<severity>warning|error)\s+(?<code>[a-zA-Z0-9-]*)\s+(?<message>.+)""".toRegex()
 
 private fun String.toSpectralLintIssue(): SpectralLintIssue? {
     // might be valid e.g. 1:1   warning  openapi-tags           OpenAPI object should have non-empty `tags` array.
@@ -68,9 +66,9 @@ private fun String.toSpectralLintIssue(): SpectralLintIssue? {
     val (line, column, severity, _, message) = result.destructured
     val severityType = if (severity == "warning") Severity.WARNING else Severity.ERROR
     return SpectralLintIssue(
-            line = line.toInt() - 1,
-            column = column.toInt(),
-            severity = severityType,
-            message = message
+        line = line.toInt() - 1,
+        column = column.toInt(),
+        severity = severityType,
+        message = message
     )
 }

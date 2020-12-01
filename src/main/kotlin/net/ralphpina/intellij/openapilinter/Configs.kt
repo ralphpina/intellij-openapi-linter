@@ -8,12 +8,12 @@ fun fetchRuleSetPath() =
         PropertiesComponent.getInstance().getValue(PROP_RULESET_KEY)
 
 fun updateRuleSetPath(path: String) =
-        PropertiesComponent.getInstance().setValue(PROP_RULESET_KEY, path)
+    PropertiesComponent.getInstance().setValue(PROP_RULESET_KEY, path)
 
 const val PROP_EXECUTABLE_KEY = "net.ralphpina.intellij.openapilinter.executablePath"
 
 fun fetchExecutablePath() =
-        PropertiesComponent.getInstance().getValue(PROP_EXECUTABLE_KEY)
+    PropertiesComponent.getInstance().getValue(PROP_EXECUTABLE_KEY)
 
 fun updateExecutablePath(path: String) =
-        PropertiesComponent.getInstance().setValue(PROP_EXECUTABLE_KEY, path)
+    PropertiesComponent.getInstance().setValue(PROP_EXECUTABLE_KEY, path)
