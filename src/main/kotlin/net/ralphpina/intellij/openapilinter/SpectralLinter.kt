@@ -1,5 +1,6 @@
 package net.ralphpina.intellij.openapilinter
 
+import com.intellij.execution.ExecutionException
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.process.ProcessOutput
 import com.intellij.execution.util.ExecUtil.execAndGetOutput
@@ -30,7 +31,7 @@ fun lint(psiFile: PsiFile): List<SpectralLintIssue> {
     try {
         val processOutput = execAndGetOutput(generalCommandLine(psiFile))
         return processOutput.parseSpectralResult()
-    } catch (exception: Exception) {
+    } catch (exception: ExecutionException) {
         logger.log("!!!! Error linting: $exception !!!!")
     } finally {
         logger.log("<<<< Ending linter <<<<")
@@ -54,7 +55,11 @@ private fun generalCommandLine(psiFile: PsiFile): GeneralCommandLine {
 private fun ProcessOutput.parseSpectralResult() =
         stdoutLines.mapNotNull { it.toSpectralLintIssue() }
 
-private val REGEX = """(?<line>\d+):(?<column>\d+)\s+(?<severity>warning|error)\s+(?<code>[a-zA-Z0-9-]*)\s+(?<message>.+)""".toRegex()
+private val REGEX = """
+    (?<line>\d+):(?<column>\d+)\s+
+    (?<severity>warning|error)\s+
+    (?<code>[a-zA-Z0-9-]*)\s+
+    (?<message>.+)""".trimIndent().toRegex()
 
 private fun String.toSpectralLintIssue(): SpectralLintIssue? {
     // might be valid e.g. 1:1   warning  openapi-tags           OpenAPI object should have non-empty `tags` array.

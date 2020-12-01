@@ -17,8 +17,7 @@ fun findFirstElementAtLine(file: PsiFile, ijLine: Int): PsiElement? {
     while (element != null && element.textLength == 0) {
         element = element.nextSibling
     }
-    if (document != null && element != null
-            && document.getLineNumber(element.textOffset) != ijLine) {
+    if (document != null && element != null && document.getLineNumber(element.textOffset) != ijLine) {
         element = null
     }
     return element
@@ -33,7 +32,7 @@ private fun getFirstSiblingFrom(file: PsiFile, ijLine: Int, document: Document?)
         if (element != null && document.getLineNumber(element.textOffset) != ijLine) {
             element = element.nextSibling
         }
-    } catch (ignore: IndexOutOfBoundsException) { //NOSONAR
+    } catch (ignore: IndexOutOfBoundsException) {
         // element keeps to be absent
     }
     return element
@@ -51,7 +50,7 @@ private fun getTextRangeForLine(document: Document, ijLine: Int): TextRange {
         val lineStartOffset = document.getLineStartOffset(ijLine)
         val lineEndOffset = document.getLineEndOffset(ijLine)
         TextRange(lineStartOffset, lineEndOffset)
-    } catch (ignore: IndexOutOfBoundsException) { //NOSONAR
+    } catch (ignore: IndexOutOfBoundsException) {
         // Local file should be different than remote
         TextRange.EMPTY_RANGE
     }
@@ -64,8 +63,7 @@ fun getLineRange(psiElement: PsiElement): TextRange {
             ?: return TextRange.EMPTY_RANGE
     val line = document.getLineNumber(psiElement.textOffset)
     val lineStartOffset =
-            if (psiElement.text.isNotBlank())
-                psiElement.textOffset
+            if (psiElement.text.isNotBlank()) psiElement.textOffset
             else psiElement.textRange.endOffset
     val lineEndOffset = document.getLineEndOffset(line)
     return TextRange(lineStartOffset, lineEndOffset)

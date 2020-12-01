@@ -11,11 +11,19 @@ private val logger = Logger.getInstance("PhabMarkdownParser")
 // We want to parse these urls and convert them to HTML links for tooltips
 private val REGEX = """(?<message>.+)\sSee \[\[ (?<url>.+) \| (?<linkText>.+)\s(?<extra>.+)""".toRegex()
 
-fun formatMessageToHtmlWithLink(lintMsg: String): String {
-    // Name must be alpha snake_case. See [[ https://confluence.team.affirm.com/display/INFOARCH/Parameters | Operation -> Parameters ]]
-    val result = REGEX.matchEntire(lintMsg.trim()) ?: return lintMsg
+/**
+ * TODO: Figure out this abstraction.
+ * I want to provide a way for users to configure
+ * a regex to parse their custom messages.
+ */
+fun String.toHtml(): String {
+    // Message format: Name must be alpha snake_case. See [[ https://co.com/Parameters | Operation -> Parameters ]]
+    val result = REGEX.matchEntire(trim()) ?: return this
     val (message, url, linkText, _) = result.destructured
     return """
-       <html>$message <a href="$url"${(if (UIUtil.isUnderDarcula()) " color=\"7AB4C9\" " else "")}>$linkText</a></html>
+        <html>
+            $message    
+            <a href="$url"${(if (UIUtil.isUnderDarcula()) " color=\"7AB4C9\" " else "")}>$linkText</a>
+        </html>
     """.trimIndent()
 }

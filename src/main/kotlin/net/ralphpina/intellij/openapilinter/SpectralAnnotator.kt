@@ -5,6 +5,7 @@ import com.intellij.lang.annotation.ExternalAnnotator
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.util.TextRange
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 
 private val logger = Logger.getInstance("SpectralAnnotator")
@@ -45,7 +46,7 @@ private fun annotateIssueInFile(holder: AnnotationHolder, psiFile: PsiFile, issu
         )
     } else if (startElement.isValid) {
         holder.createAnnotation(
-                getLineRange(if (startElement.text.trim().isEmpty()) startElement.firstChild ?: startElement else startElement),
+                getLineRange(startElement.orFirstChild()),
                 issue
         )
     } else {
@@ -58,7 +59,7 @@ private fun AnnotationHolder.createAnnotation(
         issue: SpectralLintIssue
 ) = newAnnotation(issue.toHighlightSeverity(), issue.message)
         .range(textRange)
-        .tooltip(formatMessageToHtmlWithLink(issue.message))
+        .tooltip(issue.message.toHtml())
         .create()
 
 private fun SpectralLintIssue.toHighlightSeverity() =
@@ -67,3 +68,8 @@ private fun SpectralLintIssue.toHighlightSeverity() =
             Severity.ERROR -> HighlightSeverity.ERROR
         }
 
+/**
+ * TODO: document why this is needed
+ */
+private fun PsiElement.orFirstChild() =
+        if (text.trim().isEmpty()) firstChild ?: this else this
