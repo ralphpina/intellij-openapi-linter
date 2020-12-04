@@ -14,7 +14,7 @@ To keep everything working, do not remove `<!-- ... -->` sections.
 
 ## Planned Improvements
 - [x] Clean up classes from template
-- [ ] Better organization for code
+- [x] Better organization for code
 - [ ] Document why PsiElement.orFirstChild() is needed
 - [ ] Add configuration panel to add executable and spectral config
 - [ ] Automatically search project for `.spectral.yaml` config

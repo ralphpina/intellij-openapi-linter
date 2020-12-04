@@ -1,4 +1,4 @@
-package net.ralphpina.intellij.openapilinter
+package net.ralphpina.intellij.openapilinter.linter
 
 import com.intellij.execution.ExecutionException
 import com.intellij.execution.configurations.GeneralCommandLine
@@ -6,6 +6,9 @@ import com.intellij.execution.process.ProcessOutput
 import com.intellij.execution.util.ExecUtil.execAndGetOutput
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.PsiFile
+import net.ralphpina.intellij.openapilinter.fetchExecutablePath
+import net.ralphpina.intellij.openapilinter.fetchRuleSetPath
+import net.ralphpina.intellij.openapilinter.log
 
 private val logger = Logger.getInstance("SpectralLinter")
 

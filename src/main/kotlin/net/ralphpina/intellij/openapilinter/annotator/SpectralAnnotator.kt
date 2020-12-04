@@ -1,4 +1,4 @@
-package net.ralphpina.intellij.openapilinter
+package net.ralphpina.intellij.openapilinter.annotator
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.ExternalAnnotator
@@ -7,6 +7,10 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import net.ralphpina.intellij.openapilinter.linter.Severity
+import net.ralphpina.intellij.openapilinter.linter.SpectralLintIssue
+import net.ralphpina.intellij.openapilinter.linter.lint
+import net.ralphpina.intellij.openapilinter.log
 
 private val logger = Logger.getInstance("SpectralAnnotator")
 

@@ -1,9 +1,6 @@
-package net.ralphpina.intellij.openapilinter
+package net.ralphpina.intellij.openapilinter.annotator
 
-import com.intellij.openapi.diagnostic.Logger
 import com.intellij.util.ui.UIUtil
-
-private val logger = Logger.getInstance("PhabMarkdownParser")
 
 // Phabricator/Differential have their own link markdown.
 // https://secure.phabricator.com/book/phabricator/article/remarkup/#linking-uris

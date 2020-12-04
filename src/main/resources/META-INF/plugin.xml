@@ -9,6 +9,6 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <externalAnnotator language="yaml" implementationClass="net.ralphpina.intellij.openapilinter.SpectralAnnotator" />
+        <externalAnnotator language="yaml" implementationClass="net.ralphpina.intellij.openapilinter.annotator.SpectralAnnotator" />
     </extensions>
 </idea-plugin>

@@ -1,4 +1,4 @@
-package net.ralphpina.intellij.openapilinter
+package net.ralphpina.intellij.openapilinter.annotator
 
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
