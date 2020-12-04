@@ -10,12 +10,5 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <externalAnnotator language="yaml" implementationClass="net.ralphpina.intellij.openapilinter.SpectralAnnotator" />
-        <applicationService serviceImplementation="net.ralphpina.intellij.openapilinter.services.MyApplicationService"/>
-        <projectService serviceImplementation="net.ralphpina.intellij.openapilinter.services.MyProjectService"/>
     </extensions>
-
-    <applicationListeners>
-        <listener class="net.ralphpina.intellij.openapilinter.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
 </idea-plugin>

@@ -13,7 +13,7 @@ To keep everything working, do not remove `<!-- ... -->` sections.
 <!-- Plugin description end -->
 
 ## Planned Improvements
-- [ ] Clean up classes from template
+- [x] Clean up classes from template
 - [ ] Better organization for code
 - [ ] Document why PsiElement.orFirstChild() is needed
 - [ ] Add configuration panel to add executable and spectral config
