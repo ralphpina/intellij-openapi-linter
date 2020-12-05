@@ -13,11 +13,7 @@ To keep everything working, do not remove `<!-- ... -->` sections.
 <!-- Plugin description end -->
 
 ## Planned Improvements
-- [x] Clean up classes from template
-- [x] Better organization for code
-- [ ] Document why PsiElement.orFirstChild() is needed
-- [ ] Add configuration panel to add executable and spectral config
-- [ ] Automatically search project for `.spectral.yaml` config
+- [ ] Fix editing breaks linter output (seems protolint had the same issue?)
 - [ ] Add custom regex to parse issue messages
 - [ ] Add tests
 - [ ] Can I know when plugin is running in debug?
@@ -38,6 +34,12 @@ To keep everything working, do not remove `<!-- ... -->` sections.
   Download the [latest release](https://github.com/ralphpina/intellij-openapi-linter/releases/latest) and install it manually using
   <kbd>Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
+## Configuration
+There are two configuration options:
+
+![Image of OpenAPI Linter Preferences](docs/openapi_linter_preferences.png)
+
+**Mac users**: by convention the [Spectral ruleset](https://meta.stoplight.io/docs/spectral/docs/guides/2-cli.md#using-a-ruleset-file) is prefixed with a dot: `.spectral.yaml`. This will hide if from the file picker, however, you can use the [Command+Shift+Period](https://osxdaily.com/2011/03/01/show-hidden-files-in-mac-os-x-dialog-boxes-with-commandshiftperiod/) keyboard shortcut to show them.  
 
 ---
 Plugin based on the [IntelliJ Platform Plugin Template][template].

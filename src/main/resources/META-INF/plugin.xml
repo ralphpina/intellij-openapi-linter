@@ -10,5 +10,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <externalAnnotator language="yaml" implementationClass="net.ralphpina.intellij.openapilinter.annotator.SpectralAnnotator" />
+        <projectConfigurable groupId="tools" instance="net.ralphpina.intellij.openapilinter.linter.config.LinterConfigs"/>
     </extensions>
 </idea-plugin>

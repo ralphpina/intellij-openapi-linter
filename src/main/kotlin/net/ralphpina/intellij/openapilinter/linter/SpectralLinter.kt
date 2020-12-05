@@ -6,8 +6,8 @@ import com.intellij.execution.process.ProcessOutput
 import com.intellij.execution.util.ExecUtil.execAndGetOutput
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.PsiFile
-import net.ralphpina.intellij.openapilinter.fetchExecutablePath
-import net.ralphpina.intellij.openapilinter.fetchRuleSetPath
+import net.ralphpina.intellij.openapilinter.linter.config.fetchExecutablePath
+import net.ralphpina.intellij.openapilinter.linter.config.fetchRuleSetPath
 import net.ralphpina.intellij.openapilinter.log
 
 private val logger = Logger.getInstance("SpectralLinter")
@@ -45,11 +45,11 @@ fun lint(psiFile: PsiFile): List<SpectralLintIssue> {
 
 private fun generalCommandLine(psiFile: PsiFile): GeneralCommandLine {
     return with(GeneralCommandLine()) {
-        exePath = fetchExecutablePath() ?: SPECTRAL_EXEC
+        exePath = fetchExecutablePath().ifEmpty { SPECTRAL_EXEC }
         setWorkDirectory(psiFile.project.basePath)
         withEnvironment(System.getenv())
         addParameter("lint")
-        fetchRuleSetPath()?.let { addParameter("--ruleset=$it") }
+        fetchRuleSetPath().let { if (it.isNotEmpty()) addParameter("--ruleset=$it") }
         addParameter(psiFile.virtualFile.path)
         this
     }
